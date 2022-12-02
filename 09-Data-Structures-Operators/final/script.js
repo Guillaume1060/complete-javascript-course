@@ -122,7 +122,6 @@ document.querySelector('button').addEventListener('click', function () {
 });
 */
 
-/*
 ///////////////////////////////////////
 // Working With Strings - Part 2
 
@@ -175,112 +174,110 @@ planesInLine(5);
 planesInLine(3);
 planesInLine(12);
 
-
 ///////////////////////////////////////
 // Working With Strings - Part 2
 
-const airline = 'TAP Air Portugal';
+// const airline = 'TAP Air Portugal';
 
-console.log(airline.toLowerCase());
-console.log(airline.toUpperCase());
+// console.log(airline.toLowerCase());
+// console.log(airline.toUpperCase());
 
-// Fix capitalization in name
-const passenger = 'jOnAS'; // Jonas
-const passengerLower = passenger.toLowerCase();
-const passengerCorrect =
-  passengerLower[0].toUpperCase() + passengerLower.slice(1);
-console.log(passengerCorrect);
+// // Fix capitalization in name
+// const passenger = 'jOnAS'; // Jonas
+// const passengerLower = passenger.toLowerCase();
+// const passengerCorrect =
+//   passengerLower[0].toUpperCase() + passengerLower.slice(1);
+// console.log(passengerCorrect);
 
-// Comparing emails
-const email = 'hello@jonas.io';
-const loginEmail = '  Hello@Jonas.Io \n';
+// // Comparing emails
+// const email = 'hello@jonas.io';
+// const loginEmail = '  Hello@Jonas.Io \n';
 
-// const lowerEmail = loginEmail.toLowerCase();
-// const trimmedEmail = lowerEmail.trim();
-const normalizedEmail = loginEmail.toLowerCase().trim();
-console.log(normalizedEmail);
-console.log(email === normalizedEmail);
+// // const lowerEmail = loginEmail.toLowerCase();
+// // const trimmedEmail = lowerEmail.trim();
+// const normalizedEmail = loginEmail.toLowerCase().trim();
+// console.log(normalizedEmail);
+// console.log(email === normalizedEmail);
 
-// replacing
-const priceGB = '288,97£';
-const priceUS = priceGB.replace('£', '$').replace(',', '.');
-console.log(priceUS);
+// // replacing
+// const priceGB = '288,97£';
+// const priceUS = priceGB.replace('£', '$').replace(',', '.');
+// console.log(priceUS);
 
-const announcement =
-  'All passengers come to boarding door 23. Boarding door 23!';
+// const announcement =
+//   'All passengers come to boarding door 23. Boarding door 23!';
 
-console.log(announcement.replace('door', 'gate'));
-// console.log(announcement.replaceAll('door', 'gate'));
-console.log(announcement.replace(/door/g, 'gate'));
+// console.log(announcement.replace('door', 'gate'));
+// // console.log(announcement.replaceAll('door', 'gate'));
+// console.log(announcement.replace(/door/g, 'gate'));
 
-// Booleans
-const plane = 'Airbus A320neo';
-console.log(plane.includes('A320'));
-console.log(plane.includes('Boeing'));
-console.log(plane.startsWith('Airb'));
+// // Booleans
+// const plane = 'Airbus A320neo';
+// console.log(plane.includes('A320'));
+// console.log(plane.includes('Boeing'));
+// console.log(plane.startsWith('Airb'));
 
-if (plane.startsWith('Airbus') && plane.endsWith('neo')) {
-  console.log('Part of the NEW ARirbus family');
-}
+// if (plane.startsWith('Airbus') && plane.endsWith('neo')) {
+//   console.log('Part of the NEW ARirbus family');
+// }
 
-// Practice exercise
-const checkBaggage = function (items) {
-  const baggage = items.toLowerCase();
+// // Practice exercise
+// const checkBaggage = function (items) {
+//   const baggage = items.toLowerCase();
 
-  if (baggage.includes('knife') || baggage.includes('gun')) {
-    console.log('You are NOT allowed on board');
-  } else {
-    console.log('Welcome aboard!');
-  }
-};
+//   if (baggage.includes('knife') || baggage.includes('gun')) {
+//     console.log('You are NOT allowed on board');
+//   } else {
+//     console.log('Welcome aboard!');
+//   }
+// };
 
-checkBaggage('I have a laptop, some Food and a pocket Knife');
-checkBaggage('Socks and camera');
-checkBaggage('Got some snacks and a gun for protection');
+// checkBaggage('I have a laptop, some Food and a pocket Knife');
+// checkBaggage('Socks and camera');
+// checkBaggage('Got some snacks and a gun for protection');
 
+// */
+// ///////////////////////////////////////
+// // Working With Strings - Part 1
+// const airline = 'TAP Air Portugal';
+// const plane = 'A320';
 
-///////////////////////////////////////
-// Working With Strings - Part 1
-const airline = 'TAP Air Portugal';
-const plane = 'A320';
+// console.log(plane[0]);
+// console.log(plane[1]);
+// console.log(plane[2]);
+// console.log('B737'[0]);
 
-console.log(plane[0]);
-console.log(plane[1]);
-console.log(plane[2]);
-console.log('B737'[0]);
+// console.log(airline.length);
+// console.log('B737'.length);
 
-console.log(airline.length);
-console.log('B737'.length);
+// console.log(airline.indexOf('r'));
+// console.log(airline.lastIndexOf('r'));
+// console.log(airline.indexOf('portugal'));
 
-console.log(airline.indexOf('r'));
-console.log(airline.lastIndexOf('r'));
-console.log(airline.indexOf('portugal'));
+// console.log(airline.slice(4));
+// console.log(airline.slice(4, 7));
 
-console.log(airline.slice(4));
-console.log(airline.slice(4, 7));
+// console.log(airline.slice(0, airline.indexOf(' ')));
+// console.log(airline.slice(airline.lastIndexOf(' ') + 1));
 
-console.log(airline.slice(0, airline.indexOf(' ')));
-console.log(airline.slice(airline.lastIndexOf(' ') + 1));
+// console.log(airline.slice(-2));
+// console.log(airline.slice(1, -1));
 
-console.log(airline.slice(-2));
-console.log(airline.slice(1, -1));
+// const checkMiddleSeat = function (seat) {
+//   // B and E are middle seats
+//   const s = seat.slice(-1);
+//   if (s === 'B' || s === 'E') console.log('You got the middle seat 😬');
+//   else console.log('You got lucky 😎');
+// };
 
-const checkMiddleSeat = function (seat) {
-  // B and E are middle seats
-  const s = seat.slice(-1);
-  if (s === 'B' || s === 'E') console.log('You got the middle seat 😬');
-  else console.log('You got lucky 😎');
-};
+// checkMiddleSeat('11B');
+// checkMiddleSeat('23C');
+// checkMiddleSeat('3E');
 
-checkMiddleSeat('11B');
-checkMiddleSeat('23C');
-checkMiddleSeat('3E');
+// console.log(new String('jonas'));
+// console.log(typeof new String('jonas'));
 
-console.log(new String('jonas'));
-console.log(typeof new String('jonas'));
-
-console.log(typeof new String('jonas').slice(1));
-*/
+// console.log(typeof new String('jonas').slice(1));
 
 ///////////////////////////////////////
 // Coding Challenge #3
@@ -336,7 +333,6 @@ for (const [min, event] of gameEvents) {
 }
 */
 
-/*
 ///////////////////////////////////////
 // Maps: Iteration
 const question = new Map([
@@ -372,7 +368,6 @@ console.log([...question]);
 console.log([...question.keys()]);
 console.log([...question.values()]);
 
-
 ///////////////////////////////////////
 // Maps: Fundamentals
 const rest = new Map();
@@ -405,7 +400,6 @@ console.log(rest);
 console.log(rest.size);
 
 console.log(rest.get(arr));
-
 
 ///////////////////////////////////////
 // Sets
@@ -442,7 +436,6 @@ console.log(
 );
 
 console.log(new Set('jonasschmedtmann').size);
-*/
 
 ///////////////////////////////////////
 // Coding Challenge #2
@@ -539,7 +532,6 @@ for (const player of game.scored) {
 }
 */
 
-/*
 ///////////////////////////////////////
 // Looping Objects: Object Keys, Values, and Entries
 
@@ -565,7 +557,6 @@ const entries = Object.entries(openingHours);
 for (const [day, { open, close }] of entries) {
   console.log(`On ${day} we open at ${open} and close at ${close}`);
 }
-
 
 ///////////////////////////////////////
 // Optional Chaining
@@ -599,7 +590,6 @@ console.log(users[0]?.name ?? 'User array empty');
 if (users.length > 0) console.log(users[0].name);
 else console.log('user array empty');
 
-
 ///////////////////////////////////////
 // The for-of Loop
 const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
@@ -611,7 +601,6 @@ for (const [i, el] of menu.entries()) {
 }
 
 // console.log([...menu.entries()]);
-*/
 
 ///////////////////////////////////////
 // Coding Challenge #1
