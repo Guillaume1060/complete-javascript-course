@@ -4,57 +4,57 @@
 // const flights =
 //   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
-const openingHours = {
-  thu: {
-    open: 12,
-    close: 22,
-  },
-  fri: {
-    open: 11,
-    close: 23,
-  },
+// const openingHours = {
+//   thu: {
+//     open: 12,
+//     close: 22,
+//   },
+//   fri: {
+//     open: 11,
+//     close: 23,
+//   },
 
-  sat: {
-    open: 0, // Open 24 hours
-    close: 24,
-  },
-};
-// Data needed for first part of the section
-const restaurant = {
-  name: 'Classico Italiano',
-  location: 'Via Angelo Tavanti 23, Firenze, Italy',
-  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
-  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
-  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+//   sat: {
+//     open: 0, // Open 24 hours
+//     close: 24,
+//   },
+// };
+// // Data needed for first part of the section
+// const restaurant = {
+//   name: 'Classico Italiano',
+//   location: 'Via Angelo Tavanti 23, Firenze, Italy',
+//   categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+//   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+//   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
 
-  //ES6 enhanced object literals
-  openingHours,
-  // (i/o > openingHours : openingHours)
+//   //ES6 enhanced object literals
+//   openingHours,
+//   // (i/o > openingHours : openingHours)
 
-  order(starterIndex, mainIndex) {
-    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
-  },
+//   order(starterIndex, mainIndex) {
+//     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+//   },
 
-  orderDelivery({ starterIndex = 1, mainIndex = 0, time = '20:00', adress }) {
-    console.log(
-      `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${adress} at ${time}`
-    );
-  },
+//   orderDelivery({ starterIndex = 1, mainIndex = 0, time = '20:00', adress }) {
+//     console.log(
+//       `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${adress} at ${time}`
+//     );
+//   },
 
-  orderPasta(ing1, ing2, ing3) {
-    console.log(`Here is your pasta with ${ing1}, ${ing2}, and ${ing3}`);
-  },
+//   orderPasta(ing1, ing2, ing3) {
+//     console.log(`Here is your pasta with ${ing1}, ${ing2}, and ${ing3}`);
+//   },
 
-  orderPizza(mainIngredient, ...otherIngredients) {
-    console.log(mainIngredient);
-    console.log(otherIngredients);
-  },
-};
+//   orderPizza(mainIngredient, ...otherIngredients) {
+//     console.log(mainIngredient);
+//     console.log(otherIngredients);
+//   },
+// };
 
-const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
-for (const [i, el] of menu.entries()) {
-  console.log(`${i + 1}: ${el}`);
-}
+// const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+// for (const [i, el] of menu.entries()) {
+//   console.log(`${i + 1}: ${el}`);
+// }
 
 // const rest1 = {
 //   name: 'Capri',
@@ -399,71 +399,114 @@ for (const [i, el] of menu.entries()) {
 // // // 1. Loop over the game.scored array and print each player name to the console, along with the goal number (Example: "Goal 1: Lewandowski")
 // // for (const [key, goal] of Object.entries(game.scored)) {
 // //   let goalNumber = parseInt(key);
-// //   console.log(`Goal ${goalNumber + 1}: ${goal}`);
+// // //   console.log(`Goal ${goalNumber + 1}: ${goal}`);
+// // // }
+
+// // for (const [test, test2] of game.scored.entries()) {
+// //   console.log(test);
+// //   console.log(test2);
 // // }
 
-// for (const [test, test2] of game.scored.entries()) {
-//   console.log(test);
-//   console.log(test2);
-// }
+// // 2. Use a loop to calculate the average odd and log it to the console
+// // (We already studied how to calculate averages, you can go check if you don't remember)
+// // for (const match of Object.entries(game)) {
+// //   console.log(match);
+// // }
 
-// 2. Use a loop to calculate the average odd and log it to the console
-// (We already studied how to calculate averages, you can go check if you don't remember)
-// for (const match of Object.entries(game)) {
-//   console.log(match);
-// }
+// // 3. Print the 3 odds to the console, but in a nice formatted way, exaclty like this:
+// // Odd of victory Bayern Munich: 1.33
+// // Odd of draw: 3.25
+// // Odd of victory Borrussia Dortmund: 6.5
+// // // Get the team names directly from the game object, don't hardcode them (except for "draw"). HINT: Note how the odds and the game objects have the same property names 😉
+// // for (const [key, odd] of Object.entries(game.odds)) {
+// //   const team = game[key] ?? 'odd';
+// //   console.log(`Odd of victory ${team}: ${odd}`);
+// // }
 
-// 3. Print the 3 odds to the console, but in a nice formatted way, exaclty like this:
-// Odd of victory Bayern Munich: 1.33
-// Odd of draw: 3.25
-// Odd of victory Borrussia Dortmund: 6.5
-// // Get the team names directly from the game object, don't hardcode them (except for "draw"). HINT: Note how the odds and the game objects have the same property names 😉
-// for (const [key, odd] of Object.entries(game.odds)) {
-//   const team = game[key] ?? 'odd';
-//   console.log(`Odd of victory ${team}: ${odd}`);
+// ///////////////////////////////////////
+// // Coding Challenge #3
+
+// /*
+// Let's continue with our football betting app! This time, we have a map with a log of the events that happened during the game. The values are the events themselves, and the keys are the minutes in which each event happened (a football game has 90 minutes plus some extra time).
+
+// GOOD LUCK 😀
+// */
+// const gameEvents = new Map([
+//   [17, '⚽️ GOAL'],
+//   [36, '🔁 Substitution'],
+//   [47, '⚽️ GOAL'],
+//   [61, '🔁 Substitution'],
+//   [64, '🔶 Yellow card'],
+//   [69, '🔴 Red card'],
+//   [70, '🔁 Substitution'],
+//   [72, '🔁 Substitution'],
+//   [76, '⚽️ GOAL'],
+//   [80, '⚽️ GOAL'],
+//   [92, '🔶 Yellow card'],
+// ]);
+
+// // 1. Create an array 'events' of the different game events that happened (no duplicates)
+// const event = [...gameEvents.values()];
+// console.log(event);
+// // 2. After the game has finished, is was found that the yellow card from minute 64 was unfair.
+// //  So remove this event from the game events log.
+// gameEvents.delete(64);
+// console.log(gameEvents);
+
+// // 3. Print the following string to the console: "An event happened, on average, every 9 minutes"
+// // //  (keep in mind that a game has 90 minutes)
+// // const time = 90;
+// // console.log(
+// //   gameEvents.get(time > rest.get('open') && time < rest.get('close'))
+// // );
+// // 4. Loop over the events and log them to the console,
+// // marking whether it's in the first half or second half (after 45 min) of the game, like this:
+// // [FIRST HALF] 17: ⚽️ GOAL
+// for (const [min, event] of gameEvents) {
+//   let half = min < 45 ? '[FIRST HALF]' : '[SECOND HALF]';
+//   console.log(`${half} ${min} ${event}`);
 // }
 
 ///////////////////////////////////////
-// Coding Challenge #3
+// Coding Challenge #4
 
 /* 
-Let's continue with our football betting app! This time, we have a map with a log of the events that happened during the game. The values are the events themselves, and the keys are the minutes in which each event happened (a football game has 90 minutes plus some extra time).
+// Write a program that receives a list of variable names written in underscore_case and convert them to camelCase.
+
+// The input will come from a textarea inserted into the DOM (see code below), and conversion will happen when the button is pressed.
+
+// THIS TEST DATA (pasted to textarea)
+underscore_case
+ first_name
+Some_Variable 
+  calculate_AGE
+delayed_departure
+
+// SHOULD PRODUCE THIS OUTPUT (5 separate console.log outputs)
+// underscoreCase      ✅
+// firstName           ✅✅
+// someVariable        ✅✅✅
+// calculateAge        ✅✅✅✅
+// delayedDeparture    ✅✅✅✅✅
+
+// HINT 1: Remember which character defines a new line in the textarea 😉
+// HINT 2: The solution only needs to work for a variable made out of 2 words, like a_b
+// HINT 3: Start without worrying about the ✅. Tackle that only after you have the variable name conversion working 😉
+// HINT 4: This challenge is difficult on purpose, so start watching the solution in case you're stuck. Then pause and continue!
 
 
-GOOD LUCK 😀
-*/
-const gameEvents = new Map([
-  [17, '⚽️ GOAL'],
-  [36, '🔁 Substitution'],
-  [47, '⚽️ GOAL'],
-  [61, '🔁 Substitution'],
-  [64, '🔶 Yellow card'],
-  [69, '🔴 Red card'],
-  [70, '🔁 Substitution'],
-  [72, '🔁 Substitution'],
-  [76, '⚽️ GOAL'],
-  [80, '⚽️ GOAL'],
-  [92, '🔶 Yellow card'],
-]);
+/* Creating a textarea and a button. It is also adding an event listener to the button. */
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
 
-// 1. Create an array 'events' of the different game events that happened (no duplicates)
-const event = [...gameEvents.values()];
-console.log(event);
-// 2. After the game has finished, is was found that the yellow card from minute 64 was unfair.
-//  So remove this event from the game events log.
-gameEvents.delete(64);
-console.log(gameEvents);
+const text = document.querySelector('textarea').value;
 
-// 3. Print the following string to the console: "An event happened, on average, every 9 minutes"
-// //  (keep in mind that a game has 90 minutes)
-// const time = 90;
-// console.log(
-//   gameEvents.get(time > rest.get('open') && time < rest.get('close'))
-// );
-// 4. Loop over the events and log them to the console,
-// marking whether it's in the first half or second half (after 45 min) of the game, like this:
-// [FIRST HALF] 17: ⚽️ GOAL
-for (const [min, event] of gameEvents) {
-  let half = min < 45 ? '[FIRST HALF]' : '[SECOND HALF]';
-  console.log(`${half} ${min} ${event}`);
-}
+document.querySelector('button').addEventListener('click', function () {
+  const text = document.querySelector('textarea').value;
+  const rows = text.split('\n');
+  console.log(rows[0].replace('_', ' '));
+  console.log(rows[1].replace('_', ' '));
+  console.log(rows[2].replace('_', ' '));
+  console.log(rows[3].replace('_', ' '));
+  console.log(rows[4].replace('_', ' '));
+});
