@@ -382,7 +382,7 @@ const boardPassengers = function (n, wait) {
 
 const perGroup = 1000;
 boardPassengers(180, 3);
-*/
+
 
 ///////////////////////////////////////
 // Coding Challenge #2
@@ -407,4 +407,3 @@ GOOD LUCK 😀
   });
 })();
 */
-
