@@ -70,12 +70,36 @@ const displayMovements = function (movements) {
       <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div> 
-      <div class="movements__value">${mov}</div>
+      <div class="movements__value">${mov} €</div>
     </div>`;
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-displayMovements(account1.movements);
+
+const calcDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${acc.balance} €`;
+};
+
+const calcDisplaySummary = function (acc) {
+  const incomes = acc.movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes} €`;
+
+  const outcomes = acc.movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumOut.textContent = `${Math.abs(outcomes)} €`;
+
+  const interest = acc.movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * acc.interestRate) / 100)
+    .filter(int => int >= 1)
+    .reduce((acc, int) => acc + int, 0);
+
+  labelSumInterest.textContent = `${interest} €`;
+};
 
 const createUsernames = function (accs) {
   accs.forEach(function (acc) {
@@ -88,7 +112,77 @@ const createUsernames = function (accs) {
 };
 
 createUsernames(accounts);
-console.log(accounts);
+
+const updateUI = function (acc) {
+  // Display movements
+  displayMovements(acc.movements);
+  // Display balance
+  calcDisplayBalance(acc);
+  // Display summary
+  calcDisplaySummary(acc);
+};
+
+// Event handler
+let currentAccount;
+btnLogin.addEventListener('click', function (e) {
+  e.preventDefault();
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+  console.log(currentAccount);
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // Display UI and welcome message
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(' ')[0]
+    }`;
+    containerApp.style.opacity = 100;
+
+    // clearInputFields
+    inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginPin.blur();
+
+    updateUI(currentAccount);
+  }
+});
+
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+  inputTransferAmount.value = inputTransferTo.value = '';
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentAccount.balance >= amount &&
+    receiverAcc?.username !== currentAccount.username
+  ) {
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+    updateUI(currentAccount);
+  }
+});
+
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  if (
+    currentAccount.username === inputCloseUsername.value &&
+    currentAccount.pin === Number(inputClosePin.value)
+  ) {
+    const index = accounts.findIndex(
+      acc => acc.username === currentAccount.username
+    );
+    accounts.splice(index, 1);
+
+    //clean
+    inputCloseUsername.value = inputClosePin.value = '';
+    //hide UI
+    containerApp.style.opacity = 0;
+  }
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -103,6 +197,56 @@ console.log(accounts);
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
+
+// The find Method
+const firtWithdrawal = movements.find(mov => mov < 0);
+console.log(firtWithdrawal);
+
+const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+console.log(account);
+/// REDUCE METHOD
+//
+// accumulateur -> SNOWBALL
+const balance = movements.reduce(function (acc, cur, i, arr) {
+  return acc + cur;
+}, 0);
+// below same in arrow function :
+const balance2 = movements.reduce((acc, cur) => acc + cur, 0);
+
+// Maximum value
+const max = movements.reduce(
+  (acc, mov) => (acc > mov ? acc : mov),
+  movements[0]
+);
+console.log(max);
+// MAP METHOD
+
+// const eurToUsd = 1.1;
+// const movementsUSD = movements.map(mov => mov * eurToUsd);
+
+// const movementsUSDfor = [];
+// for (const mov of movements) {
+//   movementsUSDfor.push(mov * eurToUsd);
+// }
+
+// const movementsDescriptions = movements.map(
+//   (mov, i, arr) =>
+//     `movement:${i + 1}, You ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(
+//       mov
+//     )}`
+// );
+
+// console.log(movementsDescriptions);
+
+/// FILTER METHOD
+// const deposits = movements.filter(function (mov) {
+//   return mov > 0;
+// });
+
+// console.log(deposits);
+
+// const withdrawals = movements.filter(mov => mov < 0);
+// console.log(withdrawals);
 
 // SLICE Method
 // // New array, no mutation
@@ -208,44 +352,72 @@ TEST DATA 2: Julia's data [9, 16, 6, 8, 3], Kate's data [10, 5, 6, 1, 4]
 GOOD LUCK 😀
 */
 
-// function checkDogs(array1, array2) {
-//   let correctedArray = array1.slice(1, -2);
-//   console.log(correctedArray);
-//   let completeArray = [...correctedArray, ...array2];
-//   console.log(completeArray);
+function checkDogs(array1, array2) {
+  let correctedArray = array1.slice(1, -2);
+  console.log(correctedArray);
+  let completeArray = [...correctedArray, ...array2];
+  console.log(completeArray);
 
-//   completeArray.forEach(function (AgeDog, i) {
-//     if (AgeDog >= 3) {
-//       console.log(
-//         `Dog number ${i + 1} is an adult, and is ${AgeDog} years old`
-//       );
-//     } else {
-//       console.log(`Dog number ${i + 1} is still a puppy 🐶`);
-//     }
-//   });
+  completeArray.forEach(function (AgeDog, i) {
+    if (AgeDog >= 3) {
+      console.log(
+        `Dog number ${i + 1} is an adult, and is ${AgeDog} years old`
+      );
+    } else {
+      console.log(`Dog number ${i + 1} is still a puppy 🐶`);
+    }
+  });
+}
+
+// function calcAverageHumanAge (ages) {
+
 // }
 
-// const juliaArray = [3, 5, 2, 12, 7];
-// const kateArray = [4, 1, 15, 8, 3];
+const juliaArray = [3, 5, 2, 12, 7];
+const kateArray = [4, 1, 15, 8, 3];
 
 // // TEST DATA 2: Julia's data [9, 16, 6, 8, 3], Kate's data [10, 5, 6, 1, 4]
 
-// checkDogs(juliaArray, kateArray);
+checkDogs(juliaArray, kateArray);
 
-// const eurToUsd = 1.1;
+// Coding Challenge #2
+/* 
+Let's go back to Julia and Kate's study about dogs. This time, 
+they want to convert dog ages to human ages and calculate the average age of the dogs in their study.
 
-// const movementsUSD = movements.map(mov => mov * eurToUsd);
+Create a function 'calcAverageHumanAge', which accepts an arrays of dog's ages ('ages'), 
+and does the following things in order:
 
-// const movementsUSDfor = [];
-// for (const mov of movements) {
-//   movementsUSDfor.push(mov * eurToUsd);
-// }
+1. Calculate the dog age in human years using the following formula: if the dog is <= 2 years old, humanAge = 2 * dogAge. 
+If the dog is > 2 years old, humanAge = 16 + dogAge * 4.
+2. Exclude all dogs that are less than 18 human years old 
+(which is the same as keeping dogs that are at least 18 years old)
+3. Calculate the average human age of all adult dogs 
+(you should already know from other challenges how we calculate averages 😉)
+4. Run the function for both test datasets
 
-// const movementsDescriptions = movements.map(
-//   (mov, i, arr) =>
-//     `movement:${i + 1}, You ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(
-//       mov
-//     )}`
-// );
+TEST DATA 1: [5, 2, 4, 1, 15, 8, 3]
+TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
 
-// console.log(movementsDescriptions);
+GOOD LUCK 😀
+
+*/
+// const calcAverageHumanAge = ages =>
+//   ages
+//     .map(age => (age <= 2 ? 2 * age : 16 + age * 4))
+//     .filter(age => age >= 18)
+//     .reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
+
+// calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+// calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+
+// // Coding Challenge #3
+
+/* 
+Rewrite the 'calcAverageHumanAge' function from the previous challenge, but this time as an arrow function, and using chaining!
+
+TEST DATA 1: [5, 2, 4, 1, 15, 8, 3]
+TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
+
+GOOD LUCK 😀
+*/
