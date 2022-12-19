@@ -61,9 +61,11 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = '';
-  movements.forEach(function (mov, i) {
+
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
     const html = `
     <div class="movements__row">
@@ -165,6 +167,19 @@ btnTransfer.addEventListener('click', function (e) {
   }
 });
 
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputLoanAmount.value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    // add movement
+    currentAccount.movements.push(amount);
+    // update ui
+    updateUI(currentAccount);
+  }
+  inputLoanAmount.value = '';
+});
+
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
 
@@ -177,11 +192,18 @@ btnClose.addEventListener('click', function (e) {
     );
     accounts.splice(index, 1);
 
-    //clean
+    // Clean
     inputCloseUsername.value = inputClosePin.value = '';
-    //hide UI
+    // Hide UI
     containerApp.style.opacity = 0;
   }
+});
+
+let sorted = false;
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
 });
 
 /////////////////////////////////////////////////
@@ -198,6 +220,69 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
+// Empty Arrays + Fill method
+const x = new Array(7); // create an array length(7) empty
+x.fill(1); // we fill it [1,1,1,1,1,1]
+x.fill(2, 3, 5); // we fill with 1 from index 3 to 5 // [1,1,1,2,2,1,1]
+
+// Array.from method
+const y = Array.from({ length: 7 }, (_, i) => i + 1); // [1,2,3,4,5,6,7]
+console.log(y);
+
+labelBalance.addEventListener('click', function (e) {
+  e.preventDefault();
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'),
+    el => Number(el.textContent.replace(' €', ''))
+  );
+
+  // ci dessous une technique différente pour transformer une nodeList en tableau
+  const movementsUI2 = [...document.querySelectorAll('.movements__value')];
+  console.log(movementsUI);
+});
+// includes -> equality
+console.log(movements.includes(-130)); // return true/false
+// SOME method -> condition if one mov is > 0
+const anyDeposit = movements.some(mov => mov > 0); // return true/false
+// EVERY method -> condition if all mov are > 0
+const allDesposit = movements.every(mov => mov > 0); // return true/false
+// separate callBack
+const deposit = mov => mov > 0;
+movements.some(deposit);
+movements.every(deposit);
+movements.filter(deposit);
+movements.some(deposit);
+
+// the FLAT method
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat()); // [1,2,3...,7,8] -> one level deep (by default)
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat(2)); // [1,2,3...,7,8] -> two(as parameter) level deep
+
+// flat
+const overalBalance = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+
+// flatMap
+// const overalBalance2 = accounts
+//   .flatmap(acc => acc.movements)
+//   .reduce((acc, mov) => acc + mov, 0);
+
+// SORTING
+// 1. strings
+const owners = ['jonas', 'zack', 'adam', 'martha'];
+console.log(owners.sort()); // mutation, no new array
+
+// 2. numbers
+// return < 0, A,B (keep order)
+// return > 0, B,A (switch order)
+movements.sort((a, b) => a - b);
+// same as :
+// if (a > b) return 1;
+// if (a < b) return -1;
+console.log(movements);
 // The find Method
 const firtWithdrawal = movements.find(mov => mov < 0);
 console.log(firtWithdrawal);
