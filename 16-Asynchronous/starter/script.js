@@ -21,11 +21,10 @@ const renderCountry = function (data, className = '') {
   //   countriesContainer.style.opacity = 1;
 };
 
-const renderError = function (msg) {
-  countriesContainer.insertAdjacentText('beforeend', msg);
-  //   countriesContainer.style.opacity = 1;
-};
-
+// const renderError = function (msg) {
+//   countriesContainer.insertAdjacentText('beforeend', msg);
+//   //   countriesContainer.style.opacity = 1;
+// };
 ///////////////////////////////////////
 // Our First AJAX Call: XMLHttpRequest
 
@@ -401,21 +400,146 @@ TEST DATA: Images in the img folder. Test the error handler by passing a wrong i
 //   })
 //   .catch(err => console.log('cpuc', err));
 
-const whereAmIBis = async function (country) {
-  const res = await fetch(`https://restcountries.com/v2/name/${country}`);
-  console.log(res);
+// const whereAmIBis = async function (country) {
+//   const res = await fetch(`https://restcountries.com/v2/name/${country}`);
+//   console.log(res);
+// };
+// whereAmIBis('france');
+// console.log('coucou');
+
+// // whereAmI()
+// //   .then(city => console.log(`2: ${city}`))
+// //   .catch(err => console.error(`2: ${err.message} 💥`))
+// //   .finally(() => console.log('3: Finished getting location'));
+
+// (async function () {
+//   try {
+//   } catch (err) {
+//     console.error(`2: ${err.message} 💥`);
+//   }
+// })();
+
+// // Other Promise Combinators: race, allSettled and any
+// // Promise.race
+// (async function () {
+//   const res = await Promise.race([
+//     getJSON(`https://restcountries.eu/rest/v2/name/italy`),
+//     getJSON(`https://restcountries.eu/rest/v2/name/egypt`),
+//     getJSON(`https://restcountries.eu/rest/v2/name/mexico`),
+//   ]);
+//   console.log(res[0]);
+// })();
+
+// const timeout = function (sec) {
+//   return new Promise(function (_, reject) {
+//     setTimeout(function () {
+//       reject(new Error('Request took too long!'));
+//     }, sec * 1000);
+//   });
+// };
+
+// Promise.race([
+//   getJSON(`https://restcountries.eu/rest/v2/name/tanzania`),
+//   timeout(5),
+// ])
+//   .then(res => console.log(res[0]))
+//   .catch(err => console.error(err));
+
+// // Promise.allSettled
+// Promise.allSettled([
+//   Promise.resolve('Success'),
+//   Promise.reject('ERROR'),
+//   Promise.resolve('Another success'),
+// ]).then(res => console.log(res));
+
+// Promise.all([
+//   Promise.resolve('Success'),
+//   Promise.reject('ERROR'),
+//   Promise.resolve('Another success'),
+// ])
+//   .then(res => console.log(res))
+//   .catch(err => console.error(err));
+
+// Promise.any [ES2021]
+// Promise.any([
+//   Promise.resolve('Success'),
+//   Promise.reject('ERROR'),
+//   Promise.resolve('Another success'),
+// ])
+//   .then(res => console.log(res))
+//   .catch(err => console.error(err));
+
+/* 
+
+
+GOOD LUCK 😀
+*/
+
+// PART 1
+// Write an async function 'loadNPause' that recreates Coding Challenge #2, this time using async/await (only the part where the promise is consumed). Compare the two versions, think about the big differences, and see which one you like more.
+// Don't forget to test the error handler, and to set the network speed to 'Fast 3G' in the dev tools Network tab.
+const imgContainer = document.querySelector('.images');
+
+const renderError = function (msg) {
+  countriesContainer.insertAdjacentText('beforeend', msg);
+  //   countriesContainer.style.opacity = 1;
 };
-whereAmIBis('france');
-console.log('coucou');
 
-// whereAmI()
-//   .then(city => console.log(`2: ${city}`))
-//   .catch(err => console.error(`2: ${err.message} 💥`))
-//   .finally(() => console.log('3: Finished getting location'));
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
 
-(async function () {
+const createImage = function (imgPath) {
+  return new Promise(function (resolve, reject) {
+    const img = document.createElement('img');
+    img.src = imgPath;
+
+    img.addEventListener('load', function () {
+      imgContainer.append(img);
+      resolve(img);
+    });
+
+    img.addEventListener('error', function () {
+      reject(new Error('Image not found'));
+    });
+  });
+};
+
+const loadNPause = async function () {
   try {
+    // img 1
+    let img = await createImage('img/img-1.jpg');
+    console.log('Image 1 loaded');
+    await wait(2);
+    img.style.display = 'none';
+
+    // img 2
+    img = await createImage('img/img-2.jpg');
+    console.log('Image 2 loaded');
+    await wait(2);
+    img.style.display = 'none';
   } catch (err) {
-    console.error(`2: ${err.message} 💥`);
+    console.error(`${err} 💥`);
   }
-})();
+};
+
+// loadNPause();
+// PART 2
+// 1. Create an async function 'loadAll' that receives an array of image paths 'imgArr';
+const loadAll = async function (imgArr) {
+  // 2. Use .map to loop over the array, to load all the images with the 'createImage' function (call the resulting array 'imgs')
+  const imgs = imgArr.map(async img => await createImage(img));
+  // 3. Check out the 'imgs' array in the console! Is it like you expected?
+  console.log(imgs);
+  // 4. Use a promise combinator function to actually get the images from the array 😉
+  const realimgs = await Promise.all(imgs);
+  console.log(realimgs);
+  // 5. Add the 'paralell' class to all the images (it has some CSS styles).
+  realimgs.forEach(img => img.classList.add('parallel'));
+};
+
+loadAll(['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']);
+
+// TEST DATA: ['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']. To test, turn off the 'loadNPause' function.
